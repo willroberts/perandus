@@ -1,0 +1,7 @@
+[settings]
+
+# Go to https://poe.ninja/stats to get the latest change ID.
+next_change_id = "107364320-112584916-105679488-121672693-113869134"
+
+# Search for items in this league.
+league = "Standard"
