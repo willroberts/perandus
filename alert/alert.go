@@ -6,6 +6,7 @@ import (
 	"github.com/willroberts/perandus/models"
 )
 
+// ConsoleLogAlert writes alert information to the terminal window.
 func ConsoleLogAlert(i models.Item, s models.Stash) {
 	log.Println("ALERT! Found matching item:")
 	log.Println("\tName:", i.Name)

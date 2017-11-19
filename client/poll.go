@@ -15,16 +15,19 @@ var (
 // latest change ID to stay as close to real-time as possible.
 func (c *client) Poll() error {
 	rateLimiter := time.Tick(rateLimit)
+	var exitError error
 
 	for {
 		<-rateLimiter
 
 		stashes, err := c.getOne(c.NextChangeID)
 		if err != nil {
-			return err
+			exitError = err
+			break
 		}
 		if stashes.NextChangeID == "" {
-			return errors.New("empty change id")
+			exitError = errors.New("empty change id")
+			break
 		}
 
 		for _, s := range stashes.Stashes {
@@ -34,5 +37,5 @@ func (c *client) Poll() error {
 		c.NextChangeID = stashes.NextChangeID
 	}
 
-	return nil
+	return exitError
 }
