@@ -1,12 +1,10 @@
 package filter
 
-import (
-	"github.com/willroberts/perandus/items"
-)
+import "github.com/willroberts/perandus/models"
 
 // Filter reads settings and compares items to the configured parameters.
 type Filter interface {
-	Matches(items.Item) bool
+	Matches(models.Item) bool
 }
 
 type filter struct {

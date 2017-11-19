@@ -3,7 +3,6 @@ package client
 import (
 	"log"
 
-	"github.com/willroberts/perandus/items"
 	"github.com/willroberts/perandus/models"
 )
 
@@ -39,11 +38,11 @@ func (c *client) runFilterWorker() {
 	}
 }
 
-func (c *client) AddToHistory(i items.Item) {
+func (c *client) AddToHistory(i models.Item) {
 	c.ItemHistory[i.ID] = struct{}{}
 }
 
-func (c *client) IsInHistory(i items.Item) bool {
+func (c *client) IsInHistory(i models.Item) bool {
 	if _, ok := c.ItemHistory[i.ID]; ok {
 		return true
 	}

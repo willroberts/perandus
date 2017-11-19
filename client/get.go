@@ -13,6 +13,7 @@ const (
 	baseURL string = "http://www.pathofexile.com/api/public-stash-tabs"
 )
 
+// StashesResponse reprensents a JSON response from the PoE API.
 type StashesResponse struct {
 	NextChangeID string `json:"next_change_id"`
 	Stashes      []models.Stash
