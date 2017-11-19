@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	setRemover = regexp.MustCompile("<<.*>>")
+	tagFinder = regexp.MustCompile("<<.*>>")
 )
 
 func (f *filter) Matches(i items.Item) bool {
@@ -31,7 +31,7 @@ func matchesLeague(i items.Item, league string) bool {
 }
 
 func matchesName(i items.Item, name string) bool {
-	return pruneItemName(i.Name) == name
+	return StripLocalizationTags(i.Name) == name
 }
 
 func matchesMinPrice(i items.Item, price string) bool {
@@ -42,7 +42,7 @@ func matchesMaxPrice(i items.Item, price string) bool {
 	return true
 }
 
-func pruneItemName(name string) string {
-	b := setRemover.ReplaceAll([]byte(name), []byte(""))
+func StripLocalizationTags(name string) string {
+	b := tagFinder.ReplaceAll([]byte(name), []byte(""))
 	return string(b)
 }
