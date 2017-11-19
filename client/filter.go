@@ -1,8 +1,7 @@
 package client
 
 import (
-	"log"
-
+	"github.com/willroberts/perandus/alert"
 	"github.com/willroberts/perandus/models"
 )
 
@@ -27,12 +26,10 @@ func (c *client) runFilterWorker() {
 				continue
 			}
 
+			// Print the matching item.
+			// TODO: Send an alert to c.AlertQueue instead. Don't use global log.
 			if c.Filter.Matches(i) && i.Note != "" {
-				log.Println("ALERT! Found matching item:")
-				log.Println("\tName:", i.Name)
-				log.Println("\tPrice:", i.Note)
-				log.Println("\tSeller:", s.LastCharacterName)
-				log.Println("\tID:", i.ID)
+				alert.Alert(i, s)
 			}
 		}
 	}
