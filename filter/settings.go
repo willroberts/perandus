@@ -34,7 +34,7 @@ func validateSettings(settings *toml.Tree) error {
 	}
 
 	if _, ok := settings.Get("settings.item_name").(string); !ok {
-		return errors.New("invalid item name")
+		return errors.New("invalid item_name")
 	}
 
 	return nil
