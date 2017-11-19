@@ -5,41 +5,24 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/willroberts/loot/items"
 )
-
-const (
-	BaseURL string = "http://www.pathofexile.com/api/public-stash-tabs"
-)
-
-type StashesResponse struct {
-	NextChangeID string `json:"next_change_id"`
-	Stashes      []Stash
-}
-
-type Stash struct {
-	AccountName       string
-	LastCharacterName string
-	ID                string
-	Stash             string
-	Items             []items.Item
-	Public            bool
-}
 
 type Client interface {
-	GetStashes(string) (*StashesResponse, error) // TODO: Make private.
-	Poll() chan string
+	getStashes(string) (*StashesResponse, error)
+	Poll()
 }
 
-type client struct{}
-
-func NewClient() Client {
-	c := &client{}
-	return c
+type client struct {
+	NextChangeID string
 }
 
-func (c *client) GetStashes(next string) (*StashesResponse, error) {
+func New(nextChangeID string) Client {
+	return &client{
+		NextChangeID: nextChangeID,
+	}
+}
+
+func (c *client) getStashes(next string) (*StashesResponse, error) {
 	url := BaseURL
 	if next != "" {
 		url = fmt.Sprintf("%s?id=%s", BaseURL, next)
