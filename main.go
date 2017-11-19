@@ -8,10 +8,8 @@ import (
 )
 
 func main() {
-	// Get the latest change ID.
 	latest := util.GetLatestChangeID()
 	log.Printf("Starting from change ID %s", latest)
-
 	c := client.New(latest)
 	c.Poll()
 }
