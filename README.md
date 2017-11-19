@@ -11,5 +11,6 @@ Real-time item alerts for PoE item listings, without indexing.
 
 ## To Do
 
-1. Compare each item to the configured filter
-2. Alert on match
+* Expand the power and flexibility of filters
+* Flesh out multiple alert backends
+* General cleanup
