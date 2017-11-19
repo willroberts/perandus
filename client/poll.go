@@ -15,6 +15,7 @@ func (c *client) Poll() {
 	rateLimiter := time.Tick(rateLimit)
 	for {
 		<-rateLimiter
+
 		stashes, err := c.getOne(c.NextChangeID)
 		if err != nil {
 			log.Println("error:", err.Error())
@@ -23,7 +24,11 @@ func (c *client) Poll() {
 			log.Println("empty change ID encountered")
 			break
 		}
+
+		for _, s := range stashes.Stashes {
+			c.FilterQueue <- s
+		}
+
 		c.NextChangeID = stashes.NextChangeID
-		log.Println("next change ID:", c.NextChangeID)
 	}
 }

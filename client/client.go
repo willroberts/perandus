@@ -7,10 +7,14 @@ type Client interface {
 
 type client struct {
 	NextChangeID string
+	FilterQueue  chan Stash
 }
 
 func New(nextChangeID string) Client {
-	return &client{
+	c := &client{
 		NextChangeID: nextChangeID,
+		FilterQueue:  make(chan Stash),
 	}
+	go c.runFilterWorker()
+	return c
 }
