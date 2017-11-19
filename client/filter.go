@@ -26,10 +26,9 @@ func (c *client) runFilterWorker() {
 				continue
 			}
 
-			// Print the matching item.
-			// TODO: Send an alert to c.AlertQueue instead. Don't use global log.
+			// Create alerts for matching items.
 			if c.Filter.Matches(i) && i.Note != "" {
-				alert.Alert(i, s)
+				alert.ConsoleLogAlert(i, s)
 			}
 		}
 	}
