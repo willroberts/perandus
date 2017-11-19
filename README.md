@@ -29,9 +29,10 @@ seconds faster than poe.trade.
 
 Code is grouped in the following packages:
 
+* `alert`: Output mechanisms for notifications
 * `client`: Rate-limited client for PoE API
-* `filter`: Reads settings and discards non-matching items
-* `items`: Models for PoE items
+* `filter`: Reads settings and evaluates item listings
+* `models`: Models for stashes and items
 * `util`: Helpers for retrieving data from other sources
 
 ## To Do
@@ -39,6 +40,4 @@ Code is grouped in the following packages:
 * Expand the power and flexibility of filters
   * Minimum and Maximum Price
   * Sockets and Links
-* Flesh out multiple alert backends
-  * Play sounds with SDL2 or something cross-platform
-* Refactor models and types
+* Add sound alerts
