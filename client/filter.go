@@ -3,8 +3,8 @@ package client
 import (
 	"log"
 
-	"github.com/willroberts/perandus/filter"
 	"github.com/willroberts/perandus/items"
+	"github.com/willroberts/perandus/models"
 )
 
 func (c *client) runFilterWorker() {
@@ -18,7 +18,7 @@ func (c *client) runFilterWorker() {
 		for _, i := range s.Items {
 			// Strip localization tags from item names before proceeding.
 			// It may be better to do this elsewhere.
-			i.Name = filter.StripLocalizationTags(i.Name)
+			i.Name = models.StripLocalizationTags(i.Name)
 
 			// Keep track of this item in the client history.
 			if !c.IsInHistory(i) {

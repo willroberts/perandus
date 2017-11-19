@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/willroberts/perandus/filter"
+	"github.com/willroberts/perandus/models"
 )
 
 // Client is a rate-limited HTTP client for PoE's API.
@@ -16,7 +17,7 @@ type client struct {
 	NextChangeID string
 	ItemHistory  map[string]struct{}
 	Filter       filter.Filter
-	FilterQueue  chan Stash
+	FilterQueue  chan models.Stash
 }
 
 // New initializes and returns a Client.
@@ -24,7 +25,7 @@ func New(nextChangeID string) Client {
 	c := &client{
 		NextChangeID: nextChangeID,
 		ItemHistory:  make(map[string]struct{}),
-		FilterQueue:  make(chan Stash),
+		FilterQueue:  make(chan models.Stash),
 	}
 	f, err := filter.New()
 	if err != nil {

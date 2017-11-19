@@ -1,13 +1,7 @@
 package filter
 
 import (
-	"regexp"
-
 	"github.com/willroberts/perandus/items"
-)
-
-var (
-	tagFinder = regexp.MustCompile("<<.*>>")
 )
 
 func (f *filter) Matches(i items.Item) bool {
@@ -40,10 +34,4 @@ func matchesMinPrice(i items.Item, price string) bool {
 
 func matchesMaxPrice(i items.Item, price string) bool {
 	return true
-}
-
-// StripLocalizationTags removes localization data from item names.
-func StripLocalizationTags(name string) string {
-	b := tagFinder.ReplaceAll([]byte(name), []byte(""))
-	return string(b)
 }
