@@ -1,8 +1,6 @@
 package client
 
 import (
-	"log"
-
 	"github.com/willroberts/perandus/filter"
 	"github.com/willroberts/perandus/models"
 )
@@ -10,7 +8,7 @@ import (
 // Client is a rate-limited HTTP client for PoE's API.
 type Client interface {
 	getOne(string) (*StashesResponse, error)
-	Poll()
+	Poll() error
 }
 
 type client struct {
@@ -21,7 +19,7 @@ type client struct {
 }
 
 // New initializes and returns a Client.
-func New(nextChangeID string) Client {
+func New(nextChangeID string) (Client, error) {
 	c := &client{
 		NextChangeID: nextChangeID,
 		ItemHistory:  make(map[string]struct{}),
@@ -29,9 +27,9 @@ func New(nextChangeID string) Client {
 	}
 	f, err := filter.New()
 	if err != nil {
-		log.Fatal("exit from client.New")
+		return c, err
 	}
 	c.Filter = f
 	go c.runFilterWorker()
-	return c
+	return c, nil
 }

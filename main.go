@@ -10,6 +10,11 @@ import (
 func main() {
 	latest := util.GetLatestChangeID()
 	log.Printf("Starting from change ID %s", latest)
-	c := client.New(latest)
-	c.Poll()
+	c, err := client.New(latest)
+	if err != nil {
+		log.Fatal("Failed to create client:", err.Error())
+	}
+	if err := c.Poll(); err != nil {
+		log.Fatal("Failed while polling:", err.Error())
+	}
 }

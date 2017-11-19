@@ -1,28 +1,30 @@
 package client
 
 import (
-	"log"
+	"errors"
 	"time"
 )
 
 var (
+	// The PoE API will issue temporary bans if requests are made more than once
+	// per second.
 	rateLimit = 1001 * time.Millisecond
 )
 
 // Poll sends at most one request per second to the PoE API, following the
 // latest change ID to stay as close to real-time as possible.
-func (c *client) Poll() {
+func (c *client) Poll() error {
 	rateLimiter := time.Tick(rateLimit)
+
 	for {
 		<-rateLimiter
 
 		stashes, err := c.getOne(c.NextChangeID)
 		if err != nil {
-			log.Println("error:", err.Error())
+			return err
 		}
 		if stashes.NextChangeID == "" {
-			log.Println("empty change ID encountered")
-			break
+			return errors.New("empty change id")
 		}
 
 		for _, s := range stashes.Stashes {
@@ -31,4 +33,6 @@ func (c *client) Poll() {
 
 		c.NextChangeID = stashes.NextChangeID
 	}
+
+	return nil
 }
