@@ -14,19 +14,15 @@ func (c *client) runFilterWorker() {
 		}
 
 		for _, i := range s.Items {
-			// Strip localization tags from item names before proceeding.
-			// It may be better to do this elsewhere.
 			i.Name = models.StripLocalizationTags(i.Name)
 
-			// Keep track of this item in the client history.
-			if !c.IsInHistory(i) {
-				c.AddToHistory(i)
+			if !c.isInHistory(i) {
+				c.addToHistory(i)
 			} else {
 				// We've already seen this item; don't alert.
 				continue
 			}
 
-			// Create alerts for matching items.
 			if c.Filter.Matches(i) && i.Note != "" {
 				alert.ConsoleLogAlert(i, s)
 			}
@@ -34,11 +30,11 @@ func (c *client) runFilterWorker() {
 	}
 }
 
-func (c *client) AddToHistory(i models.Item) {
+func (c *client) addToHistory(i models.Item) {
 	c.ItemHistory[i.ID] = struct{}{}
 }
 
-func (c *client) IsInHistory(i models.Item) bool {
+func (c *client) isInHistory(i models.Item) bool {
 	if _, ok := c.ItemHistory[i.ID]; ok {
 		return true
 	}
