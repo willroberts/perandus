@@ -22,7 +22,6 @@ type Item struct {
 	X                 int64 // Position in stash.
 	Y                 int64 // Position in stash.
 
-	// https://github.com/willroberts/loot/blob/master/forum/fixtures/items.json#L1238
 	FrameType     int64       // Unknown.
 	InventoryID   string      // Unknown.
 	SocketedItems interface{} // See URL above.

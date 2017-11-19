@@ -1,7 +1,7 @@
 package client
 
 import (
-	"github.com/willroberts/loot/items"
+	"github.com/willroberts/perandus/items"
 )
 
 const (

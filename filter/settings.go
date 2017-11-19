@@ -1,24 +1,41 @@
 package filter
 
 import (
+	"errors"
 	"io/ioutil"
 
 	toml "github.com/pelletier/go-toml"
 )
 
-func readSettingsBytes() []byte {
+func (f *filter) parseSettings() (*toml.Tree, error) {
 	b, err := ioutil.ReadFile("settings.toml")
 	if err != nil {
-		return ""
+		return &toml.Tree{}, err
 	}
-	return b
-}
 
-func parseSettings(b []byte) (*toml.Tree, error) {
 	s, err := toml.Load(string(b))
 	if err != nil {
 		return &toml.Tree{}, err
 	}
-	_ = s
-	// league := s.League, etc.
+
+	if err := validateSettings(s); err != nil {
+		return &toml.Tree{}, err
+	}
+
+	f.League = s.Get("settings.league").(string)
+	f.ItemName = s.Get("settings.item_name").(string)
+
+	return s, nil
+}
+
+func validateSettings(settings *toml.Tree) error {
+	if _, ok := settings.Get("settings.league").(string); !ok {
+		return errors.New("invalid league")
+	}
+
+	if _, ok := settings.Get("settings.item_name").(string); !ok {
+		return errors.New("invalid item name")
+	}
+
+	return nil
 }

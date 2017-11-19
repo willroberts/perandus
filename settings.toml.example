@@ -1,4 +1,5 @@
 [settings]
-
-# Search for items in this league.
-league = "Standard"
+league = "Harbinger"
+item_name = "Belly of the Beast"
+min_price = "0ex"
+max_price = "10ex"
