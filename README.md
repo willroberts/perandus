@@ -11,6 +11,5 @@ Real-time item alerts for PoE item listings, without indexing.
 
 ## To Do
 
-1. Parse stashes and items
-2. Compare each item to the configured filter
-3. Alert on match
+1. Compare each item to the configured filter
+2. Alert on match
