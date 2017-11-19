@@ -1,5 +1,6 @@
 package items
 
+// Item models a generic item in PoE.
 type Item struct {
 	Corrupted         bool
 	ExplicitMods      []string
@@ -28,18 +29,21 @@ type Item struct {
 	Support       bool        // Unknown.
 }
 
+// Property stores a pair of name and values.
 type Property struct {
 	DisplayMode int64 // Unknown.
 	Name        string
 	Values      [][]interface{} // FIXME.
 }
 
+// Requirement stores attribute requirements.
 type Requirement struct {
 	DisplayMode int64 // Unknown.
 	Name        string
 	Values      [][]interface{} // FIXME.
 }
 
+// Socket stores information about sockets and links.
 type Socket struct {
 	Attribute string `json:"attr"` // S, D, or I.
 	Group     int64  // Numeric socket group (shows linked sockets).

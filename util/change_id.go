@@ -8,19 +8,23 @@ import (
 )
 
 const (
-	ChangeIDURL string = "http://poe.ninja/api/Data/GetStats"
+	changeIDURL string = "http://poe.ninja/api/Data/GetStats"
 )
 
+// NinjaStats stores the NextChangeID from the poe.ninja API.
 type NinjaStats struct {
 	NextChangeID string `json:"next_change_id"`
 }
 
+// GetLatestChangeID retrieves the latest stash fro poe.ninja.
 func GetLatestChangeID() string {
-	resp, err := http.Get(ChangeIDURL)
+	resp, err := http.Get(changeIDURL)
 	if err != nil {
 		return ""
 	}
-	defer resp.Body.Close()
+	defer func() {
+		_ = resp.Body.Close()
+	}()
 
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {

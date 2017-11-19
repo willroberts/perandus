@@ -5,6 +5,7 @@ import (
 	"github.com/willroberts/perandus/items"
 )
 
+// Filter reads settings and compares items to the configured parameters.
 type Filter interface {
 	Matches(items.Item) bool
 }
@@ -17,6 +18,7 @@ type filter struct {
 	MaxPrice string
 }
 
+// New initializes and returns a Filter.
 func New() (Filter, error) {
 	f := &filter{}
 	s, err := f.parseSettings()

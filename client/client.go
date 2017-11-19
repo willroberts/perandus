@@ -6,6 +6,7 @@ import (
 	"github.com/willroberts/perandus/filter"
 )
 
+// Client is a rate-limited HTTP client for PoE's API.
 type Client interface {
 	getOne(string) (*StashesResponse, error)
 	Poll()
@@ -17,6 +18,7 @@ type client struct {
 	FilterQueue  chan Stash
 }
 
+// New initializes and returns a Client.
 func New(nextChangeID string) Client {
 	c := &client{
 		NextChangeID: nextChangeID,
