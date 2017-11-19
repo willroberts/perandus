@@ -5,11 +5,27 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/willroberts/loot/items"
 )
 
 const (
 	BaseURL string = "http://www.pathofexile.com/api/public-stash-tabs"
 )
+
+type StashesResponse struct {
+	NextChangeID string `json:"next_change_id"`
+	Stashes      []Stash
+}
+
+type Stash struct {
+	AccountName       string
+	LastCharacterName string
+	ID                string
+	Stash             string
+	Items             []items.Item
+	Public            bool
+}
 
 type Client interface {
 	GetStashes(string) (*StashesResponse, error) // TODO: Make private.
@@ -21,11 +37,6 @@ type client struct{}
 func NewClient() Client {
 	c := &client{}
 	return c
-}
-
-func (c *client) Poll() chan string {
-	ch := make(chan string)
-	return ch
 }
 
 func (c *client) GetStashes(next string) (*StashesResponse, error) {
