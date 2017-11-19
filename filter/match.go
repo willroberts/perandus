@@ -42,6 +42,7 @@ func matchesMaxPrice(i items.Item, price string) bool {
 	return true
 }
 
+// StripLocalizationTags removes localization data from item names.
 func StripLocalizationTags(name string) string {
 	b := tagFinder.ReplaceAll([]byte(name), []byte(""))
 	return string(b)
