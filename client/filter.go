@@ -1,9 +1,6 @@
 package client
 
 import (
-	"crypto/md5"
-	"encoding/hex"
-	"encoding/json"
 	"log"
 
 	"github.com/willroberts/perandus/filter"
@@ -23,15 +20,6 @@ func (c *client) runFilterWorker() {
 			// It may be better to do this elsewhere.
 			i.Name = filter.StripLocalizationTags(i.Name)
 
-			// Compute the hash and store it alongside the item.
-			b, err := json.Marshal(i)
-			if err != nil {
-				log.Println("Error hashing item:", err.Error())
-				continue
-			}
-			hashBytes := md5.Sum(b)
-			i.Hash = hex.EncodeToString(hashBytes[:])
-
 			// Keep track of this item in the client history.
 			if !c.IsInHistory(i) {
 				c.AddToHistory(i)
@@ -45,18 +33,18 @@ func (c *client) runFilterWorker() {
 				log.Println("\tName:", i.Name)
 				log.Println("\tPrice:", i.Note)
 				log.Println("\tSeller:", s.LastCharacterName)
-				log.Println("\tHash:", i.Hash)
+				log.Println("\tID:", i.ID)
 			}
 		}
 	}
 }
 
 func (c *client) AddToHistory(i items.Item) {
-	c.ItemHistory[i.Hash] = struct{}{}
+	c.ItemHistory[i.ID] = struct{}{}
 }
 
 func (c *client) IsInHistory(i items.Item) bool {
-	if _, ok := c.ItemHistory[i.Hash]; ok {
+	if _, ok := c.ItemHistory[i.ID]; ok {
 		return true
 	}
 	return false

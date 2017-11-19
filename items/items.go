@@ -7,6 +7,7 @@ type Item struct {
 	FlavorText        []string
 	Height            int64  `json:"h"` // In stash spaces.
 	Icon              string // URL.
+	ID                string
 	Identified        bool
 	ItemLevel         int64 `json:"ilvl"`
 	League            string
@@ -27,9 +28,6 @@ type Item struct {
 	InventoryID   string      // Unknown.
 	SocketedItems interface{} // See URL above.
 	Support       bool        // Unknown.
-
-	// Hash is a custom field we add to keep track of items we've already seen.
-	Hash string
 }
 
 // Property stores a pair of name and values.
