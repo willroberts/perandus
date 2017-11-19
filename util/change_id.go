@@ -1,9 +1,10 @@
-package client
+package util
 
 import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 const (
@@ -32,5 +33,5 @@ func GetLatestChangeID() string {
 		return err.Error()
 	}
 
-	return stats.NextChangeID
+	return strings.TrimSpace(stats.NextChangeID)
 }
