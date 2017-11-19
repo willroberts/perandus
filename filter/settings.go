@@ -7,25 +7,25 @@ import (
 	toml "github.com/pelletier/go-toml"
 )
 
-func (f *filter) parseSettings() (*toml.Tree, error) {
+func (f *filter) parseSettings() error {
 	b, err := ioutil.ReadFile("settings.toml")
 	if err != nil {
-		return &toml.Tree{}, err
+		return err
 	}
 
 	s, err := toml.Load(string(b))
 	if err != nil {
-		return &toml.Tree{}, err
+		return err
 	}
 
 	if err := validateSettings(s); err != nil {
-		return &toml.Tree{}, err
+		return err
 	}
 
 	f.League = s.Get("settings.league").(string)
 	f.ItemName = s.Get("settings.item_name").(string)
 
-	return s, nil
+	return nil
 }
 
 func validateSettings(settings *toml.Tree) error {
