@@ -14,6 +14,7 @@ type Client interface {
 
 type client struct {
 	NextChangeID string
+	ItemHistory  map[string]struct{}
 	Filter       filter.Filter
 	FilterQueue  chan Stash
 }
@@ -22,6 +23,7 @@ type client struct {
 func New(nextChangeID string) Client {
 	c := &client{
 		NextChangeID: nextChangeID,
+		ItemHistory:  make(map[string]struct{}),
 		FilterQueue:  make(chan Stash),
 	}
 	f, err := filter.New()

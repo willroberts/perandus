@@ -42,6 +42,3 @@ Code is grouped in the following packages:
 * Flesh out multiple alert backends
   * Play sounds with SDL2 or something cross-platform
 * Refactor models and types
-* Hash items to avoid alerting on items already seen
-  * When someone places an item into a stash, all items in that stash appear
-	  in the trade API again

@@ -27,6 +27,9 @@ type Item struct {
 	InventoryID   string      // Unknown.
 	SocketedItems interface{} // See URL above.
 	Support       bool        // Unknown.
+
+	// Hash is a custom field we add to keep track of items we've already seen.
+	Hash string
 }
 
 // Property stores a pair of name and values.
