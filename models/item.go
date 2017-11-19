@@ -1,4 +1,6 @@
-package items
+package models
+
+import "regexp"
 
 // Item models a generic item in PoE.
 type Item struct {
@@ -48,4 +50,12 @@ type Requirement struct {
 type Socket struct {
 	Attribute string `json:"attr"` // S, D, or I.
 	Group     int64  // Numeric socket group (shows linked sockets).
+}
+
+var tagFinder = regexp.MustCompile("<<.*>>")
+
+// StripLocalizationTags removes localization data from item names.
+func StripLocalizationTags(name string) string {
+	b := tagFinder.ReplaceAll([]byte(name), []byte(""))
+	return string(b)
 }
