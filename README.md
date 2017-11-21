@@ -20,24 +20,24 @@ seconds faster than poe.trade.
 
 1. Copy `settings.toml.example` to `settings.toml` and fill in the values for
    the item for which you want alerts.
-2. Run the binary (`perandus.exe`).
-3. Wait for the alert sound to play.
-4. Copy the username from the alert to buy the item in-game.
-   Or should the paste buffer automatically be filled?
+2. Run the example program (`go run main.go`).
+3. Matching items will show on the command-line.
 
 ## Code Organization
 
 Code is grouped in the following packages:
 
+* `client`: Rate-limited client for the PoE API
+* `filter`: Stream processor for items
 * `alert`: Output mechanisms for notifications
-* `client`: Rate-limited client for PoE API
-* `filter`: Reads settings and evaluates item listings
 * `models`: Models for stashes and items
 * `util`: Helpers for retrieving data from other sources
 
 ## To Do
 
+* Create an API package for the unfiltered stream
+  * Send items over a WebSocket
+* Implement filtering in JavaScript
 * Expand the power and flexibility of filters
   * Minimum and Maximum Price
   * Sockets and Links
-* Add sound alerts
