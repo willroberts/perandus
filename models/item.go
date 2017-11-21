@@ -30,6 +30,9 @@ type Item struct {
 	Width             int64 `json:"w"` // In stash spaces.
 	X                 int64 // Position in stash.
 	Y                 int64 // Position in stash.
+
+	// Custom fields.
+	CharacterName string
 }
 
 // Property stores a pair of name and values.
