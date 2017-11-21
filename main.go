@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/willroberts/perandus/alert"
 	"github.com/willroberts/perandus/client"
 	"github.com/willroberts/perandus/util"
 )
@@ -10,11 +11,18 @@ import (
 func main() {
 	latest := util.GetLatestChangeID()
 	log.Printf("Starting from change ID %s", latest)
-	c, err := client.New(latest)
-	if err != nil {
-		log.Fatal("Failed to create client:", err.Error())
-	}
-	if err := c.Poll(); err != nil {
-		log.Fatal("Failed while polling:", err.Error())
+	c := client.New(latest)
+	itemCh, errCh := c.Poll()
+	//create filter
+	for {
+		select {
+		case i := <-itemCh:
+			//if filter.matches() && i.Note != "" {
+			if i.Note != "" {
+				alert.ConsoleLogAlert(i)
+			}
+		case err := <-errCh:
+			log.Fatal("error during polling:", err.Error())
+		}
 	}
 }
