@@ -3,9 +3,9 @@ dep:
 	dep prune
 
 lint:
-	-errcheck ./...
-	go vet ./...
-	golint ./...
+	-errcheck `go list ./... | grep -v vendor`
+	-go vet `go list ./... | grep -v vendor`
+	golint `go list ./... | grep -v vendor`
 
 test:
-	go test -race ./...
+	go test -race `go list ./... | grep -v vendor`
