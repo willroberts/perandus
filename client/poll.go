@@ -3,6 +3,8 @@ package client
 import (
 	"errors"
 	"time"
+
+	"github.com/willroberts/perandus/models"
 )
 
 var (
@@ -13,29 +15,46 @@ var (
 
 // Poll sends at most one request per second to the PoE API, following the
 // latest change ID to stay as close to real-time as possible.
-func (c *client) Poll() error {
-	rateLimiter := time.Tick(rateLimit)
-	var exitError error
+func (c *client) Poll() (chan models.Item, chan error) {
+	itemCh := make(chan models.Item)
+	errCh := make(chan error, 1)
 
-	for {
-		<-rateLimiter
+	go func() {
+		rateLimiter := time.Tick(rateLimit)
+		for {
+			<-rateLimiter
 
-		stashes, err := c.getOne(c.NextChangeID)
-		if err != nil {
-			exitError = err
-			break
+			stashes, err := c.getOne(c.NextChangeID)
+			if err != nil {
+				errCh <- err
+				break
+			}
+
+			if stashes.NextChangeID == "" {
+				errCh <- errors.New("empty change ID")
+				break
+			}
+
+			for _, s := range stashes.Stashes {
+				if len(s.Items) == 0 {
+					continue
+				}
+
+				for _, i := range s.Items {
+					i.Name = models.StripLocalizationTags(i.Name)
+					if !c.isInHistory(i) {
+						c.addToHistory(i)
+					} else {
+						continue
+					}
+					i.CharacterName = s.LastCharacterName
+					itemCh <- i
+				}
+			}
+
+			c.NextChangeID = stashes.NextChangeID
 		}
-		if stashes.NextChangeID == "" {
-			exitError = errors.New("empty change id")
-			break
-		}
+	}()
 
-		for _, s := range stashes.Stashes {
-			c.FilterQueue <- s
-		}
-
-		c.NextChangeID = stashes.NextChangeID
-	}
-
-	return exitError
+	return itemCh, errCh
 }
