@@ -10,7 +10,7 @@ import (
 var (
 	// The PoE API will issue temporary bans if requests are made more than once
 	// per second.
-	rateLimit = 1001 * time.Millisecond
+	rateLimit = 1 * time.Second
 )
 
 // Poll sends at most one request per second to the PoE API, following the
