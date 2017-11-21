@@ -36,18 +36,19 @@ func (c *client) Poll() (chan models.Item, chan error) {
 			}
 
 			for _, s := range stashes.Stashes {
-				if len(s.Items) == 0 {
-					continue
-				}
-
 				for _, i := range s.Items {
 					i.Name = models.StripLocalizationTags(i.Name)
+					if i.Name == "" {
+						i.Name = models.StripLocalizationTags(i.TypeLine)
+					}
+					i.CharacterName = s.LastCharacterName
+
 					if !c.isInHistory(i) {
 						c.addToHistory(i)
 					} else {
 						continue
 					}
-					i.CharacterName = s.LastCharacterName
+
 					itemCh <- i
 				}
 			}
