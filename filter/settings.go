@@ -22,8 +22,8 @@ func (f *filter) parseSettings() error {
 		return err
 	}
 
-	f.League = s.Get("settings.league").(string)
-	f.ItemName = s.Get("settings.item_name").(string)
+	f.league = s.Get("settings.league").(string)
+	f.itemName = s.Get("settings.item_name").(string)
 
 	return nil
 }

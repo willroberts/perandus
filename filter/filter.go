@@ -1,17 +1,17 @@
 package filter
 
-import "github.com/willroberts/perandus/models"
+import (
+	"github.com/willroberts/perandus/models"
+)
 
 // Filter reads settings and compares items to the configured parameters.
 type Filter interface {
-	Matches(models.Item) bool
+	FilterItems(chan models.Item) chan models.Item
 }
 
 type filter struct {
-	League   string
-	ItemName string
-	MinPrice string
-	MaxPrice string
+	league   string
+	itemName string
 }
 
 // New initializes and returns a Filter.
@@ -21,4 +21,21 @@ func New() (Filter, error) {
 		return f, err
 	}
 	return f, nil
+}
+
+func (f *filter) FilterItems(in chan models.Item) chan models.Item {
+	out := make(chan models.Item)
+
+	go func() {
+		for {
+			select {
+			case i := <-in:
+				if f.matches(i) && i.Note != "" {
+					out <- i
+				}
+			}
+		}
+	}()
+
+	return out
 }
