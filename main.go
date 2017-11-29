@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 
-	"github.com/willroberts/perandus/alert"
 	"github.com/willroberts/perandus/client"
 	"github.com/willroberts/perandus/filter"
 	"github.com/willroberts/perandus/util"
@@ -26,7 +25,11 @@ func main() {
 	for {
 		select {
 		case i := <-filteredCh:
-			alert.ConsoleLogAlert(i)
+			log.Println("ALERT: Found matching item:")
+			log.Println("\tName:", i.Name)
+			log.Println("\tPrice:", i.Note)
+			log.Println("\tSeller:", i.CharacterName)
+			log.Println("\tID:", i.ID)
 		case err := <-errCh:
 			log.Fatal("error during polling:", err.Error())
 		}

@@ -28,7 +28,6 @@ Code is grouped in the following packages:
 
 * `client`: Rate-limited client for the PoE API
 * `filter`: Stream processor for items
-* `alert`: Output mechanisms for notifications
 * `models`: Models for stashes and items
 * `util`: Helpers for retrieving data from other sources
 
