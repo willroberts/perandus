@@ -14,7 +14,7 @@ build:
 	docker build -t willroberts/perandus .
 
 run:
-	docker run willroberts/perandus
+	docker run -p 8000:8000 -ti willroberts/perandus
 
-shell:
-	docker run -ti willroberts/perandus
+headless:
+	docker run -p 8000:8000 -dt willroberts/perandus
