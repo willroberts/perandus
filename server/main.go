@@ -24,6 +24,6 @@ func main() {
 		ReadTimeout:  15 * time.Second,
 	}
 
-	log.Println("Starting HTTP service")
+	log.Println("Starting HTTP service on 0.0.0.0:8000")
 	log.Fatal(srv.ListenAndServe())
 }
