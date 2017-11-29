@@ -18,9 +18,8 @@ seconds faster than poe.trade.
 
 ## How do I use it?
 
-1. Copy `settings.toml.example` to `settings.toml` and fill in the values for
-   the item for which you want alerts.
-2. Run the example program (`go run main.go`).
+1. Copy `settings.toml.example` to `settings.toml` and fill in the fields.
+2. Build and run the docker image with `make build && make run`.
 3. Matching items will show on the command-line.
 
 ## Code Organization
