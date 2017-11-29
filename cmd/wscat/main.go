@@ -23,12 +23,16 @@ func main() {
 	if err != nil {
 		log.Fatal("failed to connect:", err)
 	}
-	defer c.Close()
+	defer func() {
+		_ = c.Close()
+	}()
 
 	done := make(chan struct{})
 
 	go func() {
-		defer c.Close()
+		defer func() {
+			_ = c.Close()
+		}()
 		defer close(done)
 		for {
 			_, msg, err := c.ReadMessage()
@@ -54,8 +58,7 @@ func main() {
 			case <-done:
 			case <-time.After(time.Second):
 			}
-			c.Close()
-			return
+			_ = c.Close()
 		}
 	}
 }

@@ -11,6 +11,7 @@ import (
 
 var upgrader = websocket.Upgrader{}
 
+// StreamHandler connects clients to the item stream via WebSocket.
 func StreamHandler(w http.ResponseWriter, r *http.Request) {
 	c, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -18,7 +19,9 @@ func StreamHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "Unable to upgrade to websocket connection: %v", err)
 		return
 	}
-	defer c.Close()
+	defer func() {
+		_ = c.Close()
+	}()
 
 	for {
 		msg := []byte("howdy pardner")

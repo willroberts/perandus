@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	bindAddress string = "0.0.0.0:8000"
+	bindAddress = "0.0.0.0:8000"
 )
 
 func main() {
