@@ -29,13 +29,13 @@ Code is grouped in the following packages:
 * `client`: Rate-limited client for the PoE API
 * `filter`: Stream processor for items
 * `models`: Models for stashes and items
+* `server`: WebSocket API for accessing the item stream
 * `util`: Helpers for retrieving data from other sources
 
 ## To Do
 
-* Create an API package for the unfiltered stream
-  * Send items over a WebSocket
+* Send items over the server WebSocket
 * Implement filtering in JavaScript
-* Expand the power and flexibility of filters
-  * Minimum and Maximum Price
-  * Sockets and Links
+  * Expand the power and flexibility of filters
+    * Minimum and Maximum Price
+    * Sockets and Links
