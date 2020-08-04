@@ -2,6 +2,11 @@
 
 Real-time item alerts for PoE item listings, without indexing.
 
+## DEPRECATED
+
+For a modern, feature-complete client for the Path of Exile API, please use
+[github.com/willroberts/poeapi](https://github.com/willroberts/poeapi) instead.
+
 ## What is this?
 
 This is a tool for finding specific items at a specific price in Path of Exile.
